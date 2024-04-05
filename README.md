@@ -1,11 +1,18 @@
 # cintel-05-cintel
 
-Simple PyShiny app with live data (using random, updating 1x/second)
+* Simple PyShiny app with live data (using random, updating 1x/second)
+* faicons for better icons on our cards
+* pandas (and pyarrow) for data manipulation
+* shinywidgets for showing plotly charts (render_plotly) and more
+* plotly for interactive charts
+* scipy for statistical analysis
 
 # Try in the Browser
+
 Go to PyShiny Playground at https://shinylive.io/py/examples/#basic-app. Copy and paste content from dashboard/app.py and run.
 
 # Get the Code
+
 Fork this project into  GitHub account and/or just borrow code from app.py. Clone  GitHub repo down to  local machine. s.
 
 # git clone intel-05-cintel
@@ -25,12 +32,12 @@ After cloning project down  Documents folder, open the project folder for editin
 
 * Open a terminal (VS Code menu "View" / "Terminal") in the root project folder and run these commands (for Windows - the activate command is slightly different Linux/Mac).
 
- **py -m venv .venv**
+**py -m venv .venv**
 **.venv\Scripts\Activate**
 **py -m pip install --upgrade pip setuptools**
 **py -m pip install --upgrade -r requirements.txt**
 * Open a terminal (VS Code menu "View" / "Terminal") in
-the root project folder and run these commands.*
+  the root project folder and run these commands.
 
 
 
@@ -55,11 +62,13 @@ Open a browser to http://[::1]:8008/ and test the Pages app.#
 
 
 # -uPush Changes back to GitHub
+
 Open a terminal (VS Code menu "Terminal" / "New Terminal") in the root project folder and run these commands.
 
-git add .
-git commit -m "Useful commit message"
-git push -u origin main
+* git add .
+* git commit -m "Useful commit message"
+* git push -u origin main
+
 Enable GitHub Pages (One-Time)
 Go to your GitHub repository settings. Scroll down to the Pages tab. Enable GitHub Pages from the main branch and from the docs folder and click Save. Wait to see what you new URL is for the hosted app.
 
@@ -73,38 +82,40 @@ When VS Code asks to use it for the workspace, select Yes. If you miss the windo
 
 Open a terminal (VS Code menu "View" / "Terminal") in the root project folder and run these commands (for Windows - the activate command is slightly different Linux/Mac).
 
-py -m venv .venv
-.venv\Scripts\Activate
-py -m pip install --upgrade pip setuptools
-py -m pip install --upgrade -r requirements.txt
+**py -m venv .venv**
+**.venv\Scripts\Activate**
+**py -m pip install --upgrade pip setuptools**
+**py -m pip install --upgrade -r requirements.txt**
+
 Open a terminal (VS Code menu "View" / "Terminal") in the root project folder and run these commands.
 
-shiny run --reload --launch-browser dashboard/app.py
-Open a browser to http://127.0.0.1:8000/ and test the app.
+# shiny run --reload --launch-browser dashboard/app.py
+# Open a browser to http://127.0.0.1:8000/ and test the app.
 
 Run Locally - Subsequent Starts
 Open a terminal (VS Code menu "View" / "Terminal") in the root project folder and run these commands.
 
-.venv\Scripts\Activate
+# .venv\Scripts\Activate
 shiny run --reload --launch-browser dashboard/app.py
 After Making Changes, Export to Docs Folder
 Export to docs folder and test GitHub Pages locally.
 
 Open a terminal (VS Code menu "Terminal" / "New Terminal") in the root project folder and run these commands.
 
-.venv\Scripts\Activate
+# .venv\Scripts\Activate
 shiny static-assets remove
 shinylive export dashboard docs
-py -m http.server --directory docs --bind localhost 8008
-Open a browser to http://[::1]:8008/ and test the Pages app.
+# py -m http.server --directory docs --bind localhost 8008
+# Open a browser to http://[::1]:8008/ and test the Pages app.
 
 Push Changes back to GitHub
 Open a terminal (VS Code menu "Terminal" / "New Terminal") in the root project folder and run these commands.
 
-git add .
-git commit -m "Useful commit message"
-git push -u origin main
-Enable GitHub Pages (One-Time)
+# git add .
+# git commit -m "Useful commit message"
+# git push -u origin main
+
+*Enable GitHub Pages (One-Time)*
 Go to your GitHub repository settings. Scroll down to the Pages tab. Enable GitHub Pages from the main branch and from the docs folder and click Save. Wait to see what you new URL is for the hosted app.
 
 When it's ready, go to the About section of your GitHub repo and set the URL to your GitHub Pages site.

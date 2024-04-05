@@ -15,8 +15,7 @@ import pandas as pd
 import plotly.express as px
 from shinywidgets import render_plotly
 from scipy import stats
-
-# --------------------------------------------
+#------------------------
 # Import icons as you like
 # --------------------------------------------
 
@@ -33,7 +32,7 @@ from faicons import icon_svg
 # Use a type hint to make it clear that it's an integer (: int)
 # --------------------------------------------
 
-UPDATE_INTERVAL_SECS: int = 5
+UPDATE_INTERVAL_SECS: int = 3
 
 # --------------------------------------------
 # Initialize a REACTIVE VALUE with a common data structure
@@ -42,7 +41,7 @@ UPDATE_INTERVAL_SECS: int = 5
 # This reactive value is a wrapper around a DEQUE of readings
 # --------------------------------------------
 
-DEQUE_SIZE: int = 5
+DEQUE_SIZE: int = 6
 reactive_value_wrapper = reactive.value(deque(maxlen=DEQUE_SIZE))
 
 # --------------------------------------------
@@ -61,7 +60,7 @@ def reactive_calc_combined():
     reactive.invalidate_later(UPDATE_INTERVAL_SECS)
 
     # Data generation logic
-    temp = round(random.uniform(-18, -16), 1)
+    temp = round(random.uniform(65, 56), 1)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_dictionary_entry = {"temp": temp, "timestamp": timestamp}
 
@@ -86,20 +85,37 @@ def reactive_calc_combined():
 # Call the ui.page_opts() function
 # Set title to a string in quotes that will appear at the top
 # Set fillable to True to use the whole page width for the UI
+# Define UI layout
 ui.page_opts(title="PyShiny Express: Live Data ", fillable=True)
 
 
 # Original UI layout and style setup
 ui.HTML(
     """
-<style>
+  <style>
   body {
-    background-color: #E0FFFF;
-    color: #333;
+    background-color: #ADD8E6;
+    color: #333; 
+    font-family: Arial, sans-serif;
+    font-size: 16px; 
+    font-weight: normal; 
+    font-style: normal; 
+    text-decoration: none; 
+    text-transform: none; 
+    line-height: 1.5; 
+    letter-spacing: normal;
   }
-</style>
+  /* Add border style to headers 
+  h1, h2, h3, h4, h5, h6 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px; 
+    margin-bottom: 10px; 
+  }
+  </style>
 """
 )
+
+
 
 # Sidebar is typically used for user interaction/information
 # Note the with statement to create the sidebar followed by a colon
@@ -110,6 +126,7 @@ with ui.sidebar(open="open"):
         theme="yellow",
     ):
         ui.h2("Kansas Weather Explorer", class_="text-right")
+       
         ui.hr()
         
         ui.p(
@@ -119,6 +136,11 @@ with ui.sidebar(open="open"):
 
         ui.hr()
         
+        ui.input_numeric("temp_low", "Lowest Temperature", 32)
+        ui.input_numeric("temp_high", "Highest Temperature", 70) 
+    
+
+
     ui.h6("Links:")
     ui.a(
         "GitHub Source",
@@ -135,24 +157,27 @@ with ui.sidebar(open="open"):
         "PyShiny Express",
         href="hhttps://shiny.posit.co/blog/posts/shiny-express/",
         target="_blank",
+        
     )
-
+ 
 # In Shiny Express, everything not in the sidebar is in the main panel
 
 with ui.layout_columns():
     with ui.value_box(
-        showcase=icon_svg("moon"),
+        showcase=icon_svg("sun"),
         theme="blue",
     ):
+
         "Current Temperature"
 
         @render.text
         def display_temp():
             """Get the latest reading and return a temperature string"""
             deque_snapshot, df, latest_dictionary_entry = reactive_calc_combined()
-            return f"{latest_dictionary_entry['temp']} C"
+            return f"{latest_dictionary_entry['temp']} f"
 
-        "Feel Chilly"
+        "warmer than usual"
+
 
     with ui.card(full_screen=True):
         ui.card_header("Current Date and Time")
@@ -183,17 +208,14 @@ with ui.card():
     def display_plot():
         # Fetch from the reactive calc function
         deque_snapshot, df, latest_dictionary_entry = reactive_calc_combined()
+        
 
-        # Ensure the DataFrame is not empty before plotting
-        if not df.empty:
-            # Convert the 'timestamp' column to datetime for better plotting
-            df["timestamp"] = pd.to_datetime(df["timestamp"])
 
             # Create scatter plot for readings
             # pass in the df, the name of the x column, the name of the y column,
             # and more
 
-            fig = px.scatter(
+        fig = px.scatter(
                 df,
                 x="timestamp",
                 y="temp",
@@ -208,17 +230,17 @@ with ui.card():
             # then, it's pretty easy using scipy.stats.linregress()
 
             # For x let's generate a sequence of integers from 0 to len(df)
-            sequence = range(len(df))
-            x_vals = list(sequence)
-            y_vals = df["temp"]
+        sequence = range(len(df))
+        x_vals = list(sequence)
+        y_vals = df["temp"]
 
-            slope, intercept, r_value, p_value, std_err = stats.linregress(
+        slope, intercept, r_value, p_value, std_err = stats.linregress(
                 x_vals, y_vals
             )
-            df["best_fit_line"] = [slope * x + intercept for x in x_vals]
+        df["best_fit_line"] = [slope * x + intercept for x in x_vals]
 
             # Add the regression line to the figure
-            fig.add_scatter(
+        fig.add_scatter(
                 x=df["timestamp"],
                 y=df["best_fit_line"],
                 mode="lines",
@@ -226,6 +248,6 @@ with ui.card():
             )
 
             # Update layout as needed to customize further
-            fig.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)")
+        fig.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)")
 
-            return fig
+        return fig
