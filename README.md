@@ -54,7 +54,7 @@ py -m http.server --directory docs --bind localhost 8008
 Open a browser to http://[::1]:8008/ and test the Pages app.#
 
 
-# Push Changes back to GitHub
+# -uPush Changes back to GitHub
 Open a terminal (VS Code menu "Terminal" / "New Terminal") in the root project folder and run these commands.
 
 git add .

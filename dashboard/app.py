@@ -86,7 +86,7 @@ def reactive_calc_combined():
 # Call the ui.page_opts() function
 # Set title to a string in quotes that will appear at the top
 # Set fillable to True to use the whole page width for the UI
-ui.page_opts(title="PyShiny Express: Live Data Example", fillable=True)
+ui.page_opts(title="PyShiny Express: Live Data ", fillable=True)
 
 
 # Original UI layout and style setup
@@ -100,6 +100,7 @@ ui.HTML(
 </style>
 """
 )
+
 # Sidebar is typically used for user interaction/information
 # Note the with statement to create the sidebar followed by a colon
 # Everything in the sidebar is indented consistently
@@ -121,7 +122,7 @@ with ui.sidebar(open="open"):
     ui.h6("Links:")
     ui.a(
         "GitHub Source",
-        href="https://github.com/denisecase/cintel-05-cintel",
+        href="https://github.com/Priyankanaskar/cintel-05-cintel",
         target="_blank",
     )
     ui.a(
@@ -140,8 +141,8 @@ with ui.sidebar(open="open"):
 
 with ui.layout_columns():
     with ui.value_box(
-        showcase=icon_svg("sun"),
-        theme="bg-gradient-blue-purple",
+        showcase=icon_svg("moon"),
+        theme="blue",
     ):
         "Current Temperature"
 
@@ -151,7 +152,7 @@ with ui.layout_columns():
             deque_snapshot, df, latest_dictionary_entry = reactive_calc_combined()
             return f"{latest_dictionary_entry['temp']} C"
 
-        "warmer than usual"
+        "Feel Chilly"
 
     with ui.card(full_screen=True):
         ui.card_header("Current Date and Time")
@@ -228,4 +229,3 @@ with ui.card():
             fig.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)")
 
             return fig
-
